@@ -31,16 +31,11 @@ export default defineConfig({
 
   // Adapter
   // https://docs.astro.build/en/guides/deploy/
-  // 1. Vercel (serverless)
+  // 1. Vercel (serverless) - Production Ready
   adapter: vercel(),
-  output: 'server',
-  // 2. Vercel (static)
-  // adapter: vercelStatic(),
-  // 3. Local (standalone)
-  // adapter: node({ mode: 'standalone' }),
-  // output: 'server',
-  // ---
+  output: 'server', // Enable server-side rendering for dynamic features
 
+  // Image optimization
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp'
@@ -60,14 +55,24 @@ export default defineConfig({
     // Temporary fix vercel adapter
     // static build method is not needed
   ],
-  // root: './my-project-directory',
 
   // Prefetch Options
   prefetch: true,
-  // Server Options
+  
+  // Server Options - Production Ready
   server: {
-    host: true
+    host: true,
+    port: parseInt(process.env.PORT || '4321'),
+    // Security headers
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
+    }
   },
+  
   // Markdown Options
   markdown: {
     remarkPlugins: [remarkMath],
@@ -99,15 +104,25 @@ export default defineConfig({
       ]
     }
   },
+  
   experimental: {
     contentIntellisense: true
   },
+  
   vite: {
     plugins: [
       //   visualizer({
       //     emitFile: true,
       //     filename: 'stats.html'
       //   })
-    ]
+    ],
+    // Security: Disable source maps in production
+    build: {
+      sourcemap: process.env.NODE_ENV === 'development'
+    },
+    // Performance optimizations
+    ssr: {
+      noExternal: ['@astrojs/vercel']
+    }
   }
 })

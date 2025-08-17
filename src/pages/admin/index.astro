@@ -1,0 +1,243 @@
+---
+import PageLayout from '@/layouts/BaseLayout.astro'
+import { AuthService } from '../../lib/auth'
+import { DatabaseService, prisma } from '../../lib/database'
+import config from '../../site.config'
+
+// Check authentication
+const sessionToken = Astro.cookies.get('session-token')?.value
+let user = null
+let isAdmin = false
+
+if (sessionToken) {
+  try {
+    user = await AuthService.requireRole(sessionToken, 'ADMIN')
+    isAdmin = true
+  } catch (error) {
+    // Redirect to login if not authenticated
+    return Astro.redirect('/auth/login?redirect=/admin')
+  }
+} else {
+  return Astro.redirect('/auth/login?redirect=/admin')
+}
+
+// Get dashboard stats
+const stats = {
+  totalPosts: await prisma.post.count(),
+  publishedPosts: await prisma.post.count({ where: { status: 'PUBLISHED' } }),
+  totalUsers: await prisma.user.count(),
+  totalComments: await prisma.comment.count(),
+  pendingComments: await prisma.comment.count({ where: { isApproved: false } })
+}
+
+// Get recent posts
+const recentPosts = await prisma.post.findMany({
+  take: 5,
+  orderBy: { createdAt: 'desc' },
+  include: {
+    author: true,
+    _count: {
+      select: {
+        comments: true,
+        likes: true
+      }
+    }
+  }
+})
+
+// Get recent comments
+const recentComments = await prisma.comment.findMany({
+  take: 5,
+  orderBy: { createdAt: 'desc' },
+  include: {
+    author: true,
+    post: true
+  }
+})
+---
+
+<PageLayout meta={{ title: 'Admin Dashboard' }}>
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-6">
+          <h1 class="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+          <div class="flex items-center space-x-4">
+            <span class="text-sm text-gray-500">Welcome, {user.name || user.username}</span>
+            <a href="/auth/logout" class="text-red-600 hover:text-red-800">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="p-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">Total Posts</dt>
+                  <dd class="text-lg font-medium text-gray-900">{stats.totalPosts}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="p-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">Published Posts</dt>
+                  <dd class="text-lg font-medium text-gray-900">{stats.publishedPosts}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="p-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">Total Users</dt>
+                  <dd class="text-lg font-medium text-gray-900">{stats.totalUsers}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="p-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <div class="ml-5 w-0 flex-1">
+                <dl>
+                  <dt class="text-sm font-medium text-gray-500 truncate">Pending Comments</dt>
+                  <dd class="text-lg font-medium text-gray-900">{stats.pendingComments}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="bg-white shadow rounded-lg mb-8">
+        <div class="px-4 py-5 sm:p-6">
+          <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Quick Actions</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="/admin/posts/new" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+              <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              New Post
+            </a>
+            <a href="/admin/comments" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              Manage Comments
+            </a>
+            <a href="/admin/users" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+              </svg>
+              Manage Users
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Content -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Recent Posts -->
+        <div class="bg-white shadow rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Posts</h3>
+            <div class="space-y-4">
+              {recentPosts.map((post: any) => (
+                <div class="flex items-center justify-between">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">
+                      <a href={`/admin/posts/${post.id}`} class="hover:text-indigo-600">
+                        {post.title}
+                      </a>
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      by {post.author.name || post.author.username} • {new Date(post.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div class="flex items-center space-x-2 text-sm text-gray-500">
+                    <span>{post._count.comments} comments</span>
+                    <span>{post._count.likes} likes</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div class="mt-4">
+              <a href="/admin/posts" class="text-sm text-indigo-600 hover:text-indigo-500">View all posts →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Comments -->
+        <div class="bg-white shadow rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Comments</h3>
+            <div class="space-y-4">
+              {recentComments.map((comment: any) => (
+                <div class="flex items-start space-x-3">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm text-gray-900">
+                      <span class="font-medium">{comment.author.name || comment.author.username}</span>
+                      <span class="text-gray-500"> on </span>
+                      <a href={`/blog/${comment.post.slug}`} class="text-indigo-600 hover:text-indigo-500">
+                        {comment.post.title}
+                      </a>
+                    </p>
+                    <p class="text-sm text-gray-500 mt-1">{comment.content.substring(0, 100)}...</p>
+                    <p class="text-xs text-gray-400 mt-1">{new Date(comment.createdAt).toLocaleDateString()}</p>
+                  </div>
+                  {!comment.isApproved && (
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      Pending
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div class="mt-4">
+              <a href="/admin/comments" class="text-sm text-indigo-600 hover:text-indigo-500">View all comments →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</PageLayout>

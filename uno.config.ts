@@ -202,7 +202,11 @@ export default defineConfig({
   ],
   rules,
   theme: {
-    colors: themeColors
+    colors: themeColors,
+    fontFamily: {
+      'persian': ['Vazir', 'Tahoma', 'Arial', 'sans-serif'],
+      'persian-bold': ['Vazir', 'Tahoma', 'Arial', 'sans-serif'],
+    }
   },
   // https://unocss.dev/guide/extracting#limitations
   safelist: [

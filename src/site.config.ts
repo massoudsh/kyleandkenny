@@ -3,19 +3,19 @@ import type { CardListData, Config, IntegrationUserConfig, ThemeUserConfig } fro
 export const theme: ThemeUserConfig = {
   // === Basic configuration ===
   /** Title for your website. Will be used in metadata and as browser tab title. */
-  title: 'Astro Theme Pure',
+  title: 'قالب خالص آسترو',
   /** Will be used in index page & copyright declaration */
-  author: 'Pure Lab',
+  author: 'آزمایشگاه خالص',
   /** Description metadata for your website. Can be used in page metadata. */
-  description: 'Stay hungry, stay foolish',
+  description: 'گرسنه بمان، احمق بمان',
   /** The default favicon for your site which should be a path to an image in the `public/` directory. */
   favicon: '/favicon/favicon.ico',
   /** Specify the default language for this site. */
   locale: {
-    lang: 'en-US',
-    attrs: 'en_US',
+    lang: 'fa-IR',
+    attrs: 'fa_IR',
     // Date locale
-    dateLocale: 'en-US',
+    dateLocale: 'fa-IR',
     dateOptions: {
       day: 'numeric',
       month: 'short',
@@ -42,16 +42,16 @@ export const theme: ThemeUserConfig = {
     //   content: ''
     // }
   ],
-  customCss: [],
+  customCss: ['/styles/persian-fonts.css'],
 
   /** Configure the header of your site. */
   header: {
     menu: [
-      { title: 'Blog', link: '/blog' },
-      { title: 'Docs', link: '/docs' },
-      { title: 'Projects', link: '/projects' },
-      { title: 'Links', link: '/links' },
-      { title: 'About', link: '/about' }
+      { title: 'وبلاگ', link: '/blog' },
+      { title: 'مستندات', link: '/docs' },
+      { title: 'پروژه‌ها', link: '/projects' },
+      { title: 'لینک‌ها', link: '/links' },
+      { title: 'درباره', link: '/about' }
     ]
   },
 

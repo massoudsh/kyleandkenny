@@ -1,0 +1,444 @@
+/* Persian Fonts Configuration */
+
+/* Vazir Font Family */
+@font-face {
+  font-family: 'Vazir';
+  src: url('/fonts/persian/Vazir.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('/fonts/persian/Vazir-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Persian Font Variables */
+:root {
+  --font-persian: 'Vazir', 'Tahoma', 'Arial', sans-serif;
+  --font-persian-fallback: 'Tahoma', 'Arial', sans-serif;
+}
+
+/* Apply Persian fonts to Persian text */
+[lang="fa"],
+[lang="fa-IR"],
+[lang="per"],
+.persian-text {
+  font-family: var(--font-persian);
+  direction: rtl;
+  text-align: right;
+}
+
+/* Persian font for specific elements */
+.persian-heading {
+  font-family: var(--font-persian);
+  font-weight: bold;
+}
+
+.persian-body {
+  font-family: var(--font-persian);
+  line-height: 1.8;
+}
+
+/* RTL support for Persian content */
+.persian-content {
+  direction: rtl;
+  text-align: right;
+  font-family: var(--font-persian);
+}
+
+/* Persian navigation */
+.persian-nav {
+  font-family: var(--font-persian);
+  direction: rtl;
+}
+
+/* Persian footer */
+.persian-footer {
+  font-family: var(--font-persian);
+  direction: rtl;
+  text-align: right;
+}
+
+/* Persian blog posts */
+.persian-blog {
+  font-family: var(--font-persian);
+  direction: rtl;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* Persian code comments (for Persian developers) */
+.persian-code-comment {
+  font-family: var(--font-persian);
+  direction: rtl;
+}
+
+/* Responsive Persian fonts */
+@media (max-width: 768px) {
+  [lang="fa"],
+  [lang="fa-IR"],
+  [lang="per"],
+  .persian-text {
+    font-size: 0.95rem;
+  }
+}
+
+/* Persian typography improvements */
+.persian-text h1,
+.persian-text h2,
+.persian-text h3,
+.persian-text h4,
+.persian-text h5,
+.persian-text h6 {
+  font-family: var(--font-persian);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.persian-text p {
+  font-family: var(--font-persian);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.persian-text ul,
+.persian-text ol {
+  font-family: var(--font-persian);
+  padding-right: 1.5rem;
+  padding-left: 0;
+}
+
+.persian-text li {
+  font-family: var(--font-persian);
+  margin-bottom: 0.5rem;
+}
+
+.persian-text blockquote {
+  font-family: var(--font-persian);
+  border-right: 4px solid #e5e7eb;
+  border-left: none;
+  padding-right: 1rem;
+  padding-left: 0;
+  margin: 1rem 0;
+  font-style: italic;
+}
+
+/* ===== COMPREHENSIVE RTL SUPPORT ===== */
+
+/* Global RTL for Persian site */
+html[lang="fa-IR"],
+html[lang="fa"],
+html[lang="per"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Header RTL */
+.persian-header {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-header nav {
+  direction: rtl;
+}
+
+.persian-header .menu {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-header .menu li {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+/* Main content RTL */
+.persian-main {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Sidebar RTL */
+.persian-sidebar {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Tabs RTL */
+.persian-tabs {
+  direction: rtl;
+}
+
+.persian-tabs .tab-list {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-tabs .tab-item {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.persian-tabs .tab-content {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Sections RTL */
+.persian-section {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-section h1,
+.persian-section h2,
+.persian-section h3,
+.persian-section h4,
+.persian-section h5,
+.persian-section h6 {
+  text-align: right;
+  font-family: var(--font-persian);
+}
+
+/* Cards RTL */
+.persian-card {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-card .card-header {
+  text-align: right;
+}
+
+.persian-card .card-body {
+  text-align: right;
+}
+
+.persian-card .card-footer {
+  text-align: right;
+}
+
+/* Forms RTL */
+.persian-form {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-form input,
+.persian-form textarea,
+.persian-form select {
+  text-align: right;
+  direction: rtl;
+}
+
+.persian-form label {
+  text-align: right;
+}
+
+/* Lists RTL */
+.persian-list {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-list ul,
+.persian-list ol {
+  padding-right: 1.5rem;
+  padding-left: 0;
+}
+
+/* Tables RTL */
+.persian-table {
+  direction: rtl;
+}
+
+.persian-table th,
+.persian-table td {
+  text-align: right;
+}
+
+/* Navigation RTL */
+.persian-nav-menu {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-nav-menu li {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+/* Footer RTL */
+.persian-footer-content {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Blog specific RTL */
+.persian-blog-post {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-blog-post .post-meta {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-blog-post .post-tags {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Docs specific RTL */
+.persian-docs {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-docs .toc {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-docs .content {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Projects RTL */
+.persian-projects {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-projects .project-card {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Links RTL */
+.persian-links {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-links .link-card {
+  direction: rtl;
+  text-align: right;
+}
+
+/* About RTL */
+.persian-about {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Search RTL */
+.persian-search {
+  direction: rtl;
+}
+
+.persian-search input {
+  text-align: right;
+  direction: rtl;
+}
+
+/* Pagination RTL */
+.persian-pagination {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-pagination .prev {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+.persian-pagination .next {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+/* Comments RTL */
+.persian-comments {
+  direction: rtl;
+  text-align: right;
+}
+
+.persian-comments .comment {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Social media RTL */
+.persian-social {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Utility classes for RTL */
+.rtl {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+.rtl-text {
+  text-align: right !important;
+}
+
+.rtl-margin {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+.rtl-padding {
+  padding-left: 0 !important;
+  padding-right: 1rem !important;
+}
+
+/* Responsive RTL adjustments */
+@media (max-width: 768px) {
+  .persian-header .menu li {
+    margin-right: 0.5rem;
+  }
+  
+  .persian-tabs .tab-item {
+    margin-right: 0.25rem;
+  }
+  
+  .persian-nav-menu li {
+    margin-right: 0.5rem;
+  }
+}
+
+/* Dark mode RTL support */
+.dark .persian-text blockquote {
+  border-right-color: #374151;
+}
+
+.dark .persian-content {
+  color: #e5e7eb;
+}
+
+/* Animation support for RTL */
+.persian-fade-in {
+  animation: persian-fade-in 0.3s ease-in-out;
+}
+
+@keyframes persian-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

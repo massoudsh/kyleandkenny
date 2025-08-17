@@ -5,7 +5,7 @@ import { Icon } from '../user'
 ---
 
 <header-component
-  class='group sticky top-4 z-30 md:z-50 mb-12 flex items-center justify-between rounded-xl border border-transparent max-sm:py-1 sm:rounded-2xl'
+  class={`group sticky top-4 z-30 md:z-50 mb-12 flex items-center justify-between rounded-xl border border-transparent max-sm:py-1 sm:rounded-2xl ${config.locale.lang.startsWith('fa') ? 'persian-header' : ''}`}
 >
   <a
     class='z-30 text-xl font-semibold group-[.not-top]:ms-2 sm:group-[.not-top]:ms-3'
@@ -18,9 +18,9 @@ import { Icon } from '../user'
     {/* Menu links */}
     <div
       id='headerExpandContent'
-      class='end-0 start-0 top-12 grid border border-transparent group-[.not-top]:rounded-xl group-[.expanded]:opacity-100 dark:group-[.expanded.not-top]:bg-muted max-sm:absolute max-sm:opacity-0 max-sm:group-[.not-top]:border-border max-sm:group-[.expanded.not-top]:bg-background max-sm:group-[.not-top]:px-4 max-sm:group-[.not-top]:py-2 sm:grid-rows-1'
+      class={`end-0 start-0 top-12 grid border border-transparent group-[.not-top]:rounded-xl group-[.expanded]:opacity-100 dark:group-[.expanded.not-top]:bg-muted max-sm:absolute max-sm:opacity-0 max-sm:group-[.not-top]:border-border max-sm:group-[.expanded.not-top]:bg-background max-sm:group-[.not-top]:px-4 max-sm:group-[.not-top]:py-2 sm:grid-rows-1 ${config.locale.lang.startsWith('fa') ? 'persian-nav-menu' : ''}`}
     >
-      <div class='flex flex-col items-center justify-center overflow-hidden sm:flex-row'>
+      <div class={`flex flex-col items-center justify-center overflow-hidden sm:flex-row ${config.locale.lang.startsWith('fa') ? 'persian-nav' : ''}`}>
         {
           config.header.menu.map((item) => (
             <a

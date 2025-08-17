@@ -20,13 +20,13 @@ const {
 } = Astro.props
 ---
 
-<html lang={config.locale.lang}>
+<html lang={config.locale.lang} class={config.locale.lang?.startsWith('fa') ? 'rtl' : ''}>
   <head>
     <BaseHead {articleDate} {description} {ogImage} {title} />
     <ThemeProvider />
   </head>
 
-  <body class='flex justify-center bg-background text-foreground' {...props}>
+  <body class={`flex justify-center bg-background text-foreground ${config.locale.lang?.startsWith('fa') ? 'persian-main' : ''}`} {...props}>
     {
       highlightColor && (
         <div
@@ -36,7 +36,7 @@ const {
         />
       )
     }
-    <div class='w-full max-w-[70rem] px-4 sm:px-7 lg:px-10'>
+    <div class={`w-full max-w-[70rem] px-4 sm:px-7 lg:px-10 ${config.locale.lang?.startsWith('fa') ? 'persian-content' : ''}`}>
       <Header />
       <slot />
       <Footer />

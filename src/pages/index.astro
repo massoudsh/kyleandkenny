@@ -64,8 +64,8 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
       </a>
     </section>
 
-    <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
-      <Section title='About'>
+    <div id='content' class={`animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6 ${config.locale.lang?.startsWith('fa') ? 'persian-content' : ''}`}>
+      <Section title='About' class={config.locale.lang?.startsWith('fa') ? 'persian-section' : ''}>
         <p class='text-muted-foreground'>Developer / Designer</p>
         <p class='text-muted-foreground'>
           Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione
@@ -76,7 +76,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
       </Section>
       {
         allPostsByDate.length > 0 && (
-          <Section title='Posts'>
+          <Section title='Posts' class={config.locale.lang?.startsWith('fa') ? 'persian-section' : ''}>
             <ul class='flex flex-col gap-y-1.5 sm:gap-y-2'>
               {allPostsByDate.map((p) => (
                 <li class='flex flex-col gap-x-2 sm:flex-row'>
@@ -118,7 +118,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
       />
     </Section> */
       }
-      <Section title='Education'>
+      <Section title='Education' class={config.locale.lang?.startsWith('fa') ? 'persian-section' : ''}>
         <Card
           as='a'
           heading='Lorem ipsum'
@@ -138,7 +138,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
         </Card>
       </Section>
 
-      <Section title='Website List'>
+      <Section title='Website List' class={config.locale.lang?.startsWith('fa') ? 'persian-section' : ''}>
         <div class='grid grid-cols-1 gap-3 sm:grid-cols-2'>
           <ProjectCard
             href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
@@ -167,7 +167,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
         </div>
       </Section>
 
-      <Section title='Certifications'>
+      <Section title='Certifications' class={config.locale.lang?.startsWith('fa') ? 'persian-section' : ''}>
         <Card
           as='a'
           heading='Lorem ipsum'
@@ -177,7 +177,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
         />
       </Section>
 
-      <Section title='Skills'>
+      <Section title='Skills' class={config.locale.lang?.startsWith('fa') ? 'persian-section' : ''}>
         <SkillLayout title='Languages' skills={languages} />
         <SkillLayout title='Frontend' skills={frontend} />
         <SkillLayout title='Backend' skills={backend} />
