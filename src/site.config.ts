@@ -3,19 +3,19 @@ import type { CardListData, Config, IntegrationUserConfig, ThemeUserConfig } fro
 export const theme: ThemeUserConfig = {
   // === Basic configuration ===
   /** Title for your website. Will be used in metadata and as browser tab title. */
-  title: 'قالب خالص آسترو',
+  title: 'Astro Theme Pure',
   /** Will be used in index page & copyright declaration */
-  author: 'آزمایشگاه خالص',
+  author: 'Astro Theme Pure',
   /** Description metadata for your website. Can be used in page metadata. */
-  description: 'گرسنه بمان، احمق بمان',
+  description: 'A simple, fast and powerful blog theme built by Astro',
   /** The default favicon for your site which should be a path to an image in the `public/` directory. */
   favicon: '/favicon/favicon.ico',
   /** Specify the default language for this site. */
   locale: {
-    lang: 'fa-IR',
-    attrs: 'fa_IR',
+    lang: 'en-US',
+    attrs: 'en_US',
     // Date locale
-    dateLocale: 'fa-IR',
+    dateLocale: 'en-US',
     dateOptions: {
       day: 'numeric',
       month: 'short',
@@ -47,11 +47,11 @@ export const theme: ThemeUserConfig = {
   /** Configure the header of your site. */
   header: {
     menu: [
-      { title: 'وبلاگ', link: '/blog' },
-      { title: 'مستندات', link: '/docs' },
-      { title: 'پروژه‌ها', link: '/projects' },
-      { title: 'لینک‌ها', link: '/links' },
-      { title: 'درباره', link: '/about' }
+      { title: 'Blog', link: '/blog' },
+      { title: 'Docs', link: '/docs' },
+      { title: 'Projects', link: '/projects' },
+      { title: 'Links', link: '/links' },
+      { title: 'About', link: '/about' }
     ]
   },
 
@@ -61,22 +61,16 @@ export const theme: ThemeUserConfig = {
     year: `© ${new Date().getFullYear()}`,
     // year: `© 2019 - ${new Date().getFullYear()}`,
     links: [
-      // Registration link
-      {
-        title: 'Moe ICP 114514',
-        link: 'https://icp.gov.moe/?keyword=114514',
-        style: 'text-sm' // Uno/TW CSS class
-      },
-      {
-        title: 'Travelling',
-        link: 'https://www.travellings.cn/go.html',
-        style: 'text-sm'
-      },
       // Privacy Policy link
       {
-        title: 'Site Policy',
-        link: '/terms/list',
+        title: 'Privacy Policy',
+        link: '/terms/privacy-policy',
         pos: 2 // position set to 2 will be appended to copyright line
+      },
+      {
+        title: 'Terms of Service',
+        link: '/terms/terms-and-conditions',
+        pos: 2
       }
     ],
     /** Enable displaying a “Astro & Pure theme powered” link in your site’s footer. */
@@ -188,3 +182,4 @@ export const terms: CardListData = {
 
 const config = { ...theme, integ } as Config
 export default config
+

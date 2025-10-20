@@ -301,4 +301,4 @@ export class DatabaseService {
 export { prisma as db }
 
 // Extend DatabaseService with prisma property
-;(DatabaseService as any).prisma = prisma
+;(DatabaseService as unknown as { prisma: PrismaClient }).prisma = prisma

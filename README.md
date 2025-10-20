@@ -59,32 +59,57 @@ See [astro-theme-pure](https://www.npmjs.com/package/astro-pure) on npm.
 Environment requirements:
 
 - [Nodejs](https://nodejs.org/): 18.0.0+
+- [PostgreSQL](https://www.postgresql.org/): For database functionality
 
-Clone the repository:
+### Quick Setup
 
 ```shell
+# Clone the repository
 git clone https://github.com/cworld1/astro-theme-pure.git
 cd astro-theme-pure
+
+# Install dependencies
+npm install
+
+# Set up environment
+npm run setup:env
+
+# Set up database
+npm run db:generate
+npm run db:push
+npm run db:seed
+
+# Start development server
+npm run dev
 ```
 
-Useful commands:
+### Development Commands
 
 ```shell
-# install dependencies
-bun install
+# Development
+npm run dev          # Start development server
+npm run dev:check    # Start with type checking
 
-# start the dev server
-bun dev
+# Building
+npm run build        # Build for production
+npm run preview      # Preview production build
 
-# build the project
-bun run build
+# Database
+npm run db:generate  # Generate Prisma client
+npm run db:push      # Push schema to database
+npm run db:studio    # Open Prisma Studio
+npm run db:seed      # Seed database
 
-# preview (after the build)
-bun preview
+# Code Quality
+npm run lint         # Fix linting issues
+npm run format       # Format code
+npm run check        # Type checking
 
-# create a new post
-bun new-post
+# Content
+npm run new          # Create a new post
 ```
+
+For detailed setup instructions, see [SETUP.md](./SETUP.md) and [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ## Contributions
 

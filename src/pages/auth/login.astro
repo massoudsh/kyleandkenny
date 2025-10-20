@@ -1,7 +1,6 @@
 ---
 import PageLayout from '@/layouts/BaseLayout.astro'
 import { AuthService } from '../../lib/auth'
-import config from '../../site.config'
 
 let error = ''
 let success = ''
@@ -12,7 +11,6 @@ if (Astro.request.method === 'POST') {
     const formData = await Astro.request.formData()
     const email = formData.get('email') as string
     const password = formData.get('password') as string
-    const redirect = Astro.url.searchParams.get('redirect') || '/'
 
     if (!email || !password) {
       error = 'Please fill in all fields'
@@ -36,7 +34,7 @@ if (Astro.request.method === 'POST') {
         maxAge: 7 * 24 * 60 * 60 // 7 days
       })
 
-      return Astro.redirect(redirect)
+      return Astro.redirect('/')
     }
   } catch (err) {
     error = err instanceof Error ? err.message : 'Login failed'

@@ -1,19 +1,16 @@
 ---
 import PageLayout from '@/layouts/BaseLayout.astro'
 import { AuthService } from '../../lib/auth'
-import { DatabaseService, prisma } from '../../lib/database'
-import config from '../../site.config'
+import { prisma } from '../../lib/database'
 
 // Check authentication
 const sessionToken = Astro.cookies.get('session-token')?.value
 let user = null
-let isAdmin = false
 
 if (sessionToken) {
   try {
     user = await AuthService.requireRole(sessionToken, 'ADMIN')
-    isAdmin = true
-  } catch (error) {
+  } catch {
     // Redirect to login if not authenticated
     return Astro.redirect('/auth/login?redirect=/admin')
   }
@@ -181,7 +178,7 @@ const recentComments = await prisma.comment.findMany({
           <div class="px-4 py-5 sm:p-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Posts</h3>
             <div class="space-y-4">
-              {recentPosts.map((post: any) => (
+              {recentPosts.map((post) => (
                 <div class="flex items-center justify-between">
                   <div class="flex-1 min-w-0">
                     <p class="text-sm font-medium text-gray-900 truncate">
@@ -211,7 +208,7 @@ const recentComments = await prisma.comment.findMany({
           <div class="px-4 py-5 sm:p-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Comments</h3>
             <div class="space-y-4">
-              {recentComments.map((comment: any) => (
+              {recentComments.map((comment) => (
                 <div class="flex items-start space-x-3">
                   <div class="flex-1 min-w-0">
                     <p class="text-sm text-gray-900">

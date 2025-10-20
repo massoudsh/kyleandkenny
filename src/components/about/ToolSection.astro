@@ -11,16 +11,16 @@ interface Props {
     name: string
     description: string
     href: string
-    icon: Promise<typeof import('*.svg?raw')> | ImageMetadata // 支持SVG或图像资源
-    darkIcon?: Promise<typeof import('*.svg?raw')> | ImageMetadata
+    icon: Promise<typeof import('*.svg?raw')> | any // 支持SVG或图像资源
+    darkIcon?: Promise<typeof import('*.svg?raw')> | any
   }[]
 }
 
 const { class: className, title, tools, ...props } = Astro.props
 
 // 判断是否为ImageMetadata类型
-function isImageMetadata(obj: any): obj is ImageMetadata {
-  return obj && typeof obj === 'object' && 'src' in obj
+function isImageMetadata(obj: unknown): obj is any {
+  return Boolean(obj && typeof obj === 'object' && 'src' in obj)
 }
 ---
 

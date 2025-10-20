@@ -204,7 +204,7 @@ export class SecurityUtils {
   }
 
   // Logging for security events
-  static logSecurityEvent(event: string, details: Record<string, any>, ip?: string) {
+  static logSecurityEvent(event: string, details: Record<string, unknown>, ip?: string) {
     console.log(`[SECURITY] ${event}:`, {
       timestamp: new Date().toISOString(),
       ip,
