@@ -4,6 +4,10 @@ import { Image } from 'astro:assets'
 import { Svg } from 'astro-pure/user'
 import { cn } from 'astro-pure/utils'
 
+import type { ImageMetadata } from 'astro'
+
+type IconType = Promise<typeof import('*.svg?raw')> | ImageMetadata
+
 interface Props {
   class?: string
   title: string
@@ -11,15 +15,15 @@ interface Props {
     name: string
     description: string
     href: string
-    icon: Promise<typeof import('*.svg?raw')> | any // 支持SVG或图像资源
-    darkIcon?: Promise<typeof import('*.svg?raw')> | any
+    icon: IconType
+    darkIcon?: IconType
   }[]
 }
 
 const { class: className, title, tools, ...props } = Astro.props
 
-// 判断是否为ImageMetadata类型
-function isImageMetadata(obj: unknown): obj is any {
+// Check if object is ImageMetadata type
+function isImageMetadata(obj: unknown): obj is ImageMetadata {
   return Boolean(obj && typeof obj === 'object' && 'src' in obj)
 }
 ---
